@@ -28,58 +28,57 @@ export default class Weather extends Component{
 
 const weatherCases = {
     Rain: {
-        colors: ['#00C6FB', '#005BEA'],
-        title: "Raining",
+        colors: ['#5499C7', '#AED6F1'],
+        title: "Rain",
         subtitle: "For more info look outside",
-        icon: 'weather-rainy'
+        icon: 'weather-pouring'
     },
     Clear: {
-        colors: ['#FEF253', '#FF7300'],
+        colors: ['#D6EAF8', '#5DADE2'],
         title: "Sunny",
         subtitle: "For more info look outside",
         icon: 'weather-sunny'
     },
     Thunderstorm: {
         colors: ['#00ECBC', '#007ADF'],
-        title: "Thunderstorm",
+        title: "Storm",
         subtitle: "For more info look outside",
-        icon: 'weather-lightning'
+        icon: 'weather-lightning-rainy'
     },
     Clouds:{
-        colors: ['#D7D2CC', '#304352'],
-        title: "Cloud",
+        colors: ['#85929E', '#D5D8DC'],
+        title: "Clouds",
         subtitle: "For more info look outside",
         icon: 'weather-cloudy'
     },
     Snow: {
         colors: ['#7DE2FC', '#B9B6E5'],
-        title: "Cold",
+        title: "Snow",
         subtitle: "For more info look outside",
         icon: 'weather-snowy'
     },
     Drizzle: {
-        colors: ['#89F7FE', '#66A6FF'],
+        colors: ['#AF7AC5', '#E8DAEF'],
         title: "Drizzle",
         subtitle: "For more info look outside",
-        icon: 'weather-hail'
+        icon: 'weather-rainy'
     },
     Haze: {
-        colors: ['#89F7FE', '#66A6FF'],
+        colors: ['#1F618D', '#AED6F1'],
         title: "Haze",
         subtitle: "For more info look outside",
-        icon: 'weather-hail'
+        icon: 'weather-fog'
     },
     Mist: {
-        colors: ['#89F7FE', '#66A6FF'],
+        colors: ['#707B7C', '#A6ACAF'],
         title: "Mist",
         subtitle: "For more info look outside",
-        icon: 'weather-fog'
+        icon: 'weather-partlycloudy'
     }
 }
 
-function Weather({ weatherName, temp, cityName}){
-    console.log(weatherName);
-    console.log(cityName);
+function Weather({ weatherName, temp, cityName, tempMax, tempMin, weatherDescription}){
+    console.log(weatherName, cityName, tempMax, tempMin, weatherDescription);
     return (
         <LinearGradient 
         colors={ weatherCases[weatherName].colors } 
@@ -91,12 +90,18 @@ function Weather({ weatherName, temp, cityName}){
                     size={144} 
                     name= {weatherCases[weatherName].icon} 
                 />
-                <Text style={styles.temp}> {temp} F</Text>
+                <View>
+                    <Text style={styles.tempCurrent}> {temp} F</Text>
+                    <Text style={styles.tempMaxMin}> {tempMin} F / {tempMax} F </Text>
+                </View>
                 <Text style={styles.city}> {cityName} </Text>
             </View>
 
             <View style={styles.lower}>
-                <Text style={styles.title}> {weatherCases[weatherName].title} </Text>
+                <View style={styles.weatherInformation}>
+                    <Text style={styles.title}> {weatherCases[weatherName].title} </Text>
+                    <Text style={styles.description}> {weatherDescription} </Text>
+                </View>
                 <Text style={styles.subtitle}> {weatherCases[weatherName].subtitle} </Text>
             </View>
         </LinearGradient>
@@ -121,7 +126,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         //backgroundColor: "transparent"
     },
-    temp:{
+    tempCurrent:{
         fontSize: 48,
         backgroundColor: "transparent",
         color: 'white',
@@ -138,7 +143,7 @@ const styles = StyleSheet.create({
         backgroundColor: "transparent",
         color: 'white',
         marginBottom: 10,
-        fontWeight: "300"
+        fontWeight: "500"
     },
     subtitle: {
         fontSize: 24,
@@ -151,5 +156,20 @@ const styles = StyleSheet.create({
         backgroundColor: "transparent",
         color: 'white',
         marginTop: 10
+    },
+    description: {
+        fontSize: 24,
+        backgroundColor: "transparent",
+        color: "white",
+        marginTop: 14,
+        fontWeight: "400"
+    },
+    weatherInformation: {
+        flexDirection: 'row'
+    },
+    tempMaxMin: {
+        fontSize: 20,
+        backgroundColor: "transparent",
+        color: "white"
     }
 });

@@ -10,7 +10,10 @@ export default class App extends Component {
     error: null,
     temperature: null,
     name: null,
-    cityName: null
+    cityName: null,
+    tempMax: null,
+    tempMin: null,
+    weatherDescription: null
   }
 
   componentDidMount(){
@@ -34,23 +37,34 @@ export default class App extends Component {
     .then(json => {
       console.log(json);
       console.log(json.name);
+      console.log(json.main.temp_max, json.main.temp_min, json.weather[0].description)
       this.setState({
         temperature: json.main.temp,
         name: json.weather[0].main,
         cityName: json.name,
-        isLoaded: true
+        isLoaded: true,
+        tempMax: json.main.temp_max, 
+        tempMin: json.main.temp_min, 
+        weatherDescription: json.weather[0].description
       });
     });
   }
 
   render() {
-    const { isLoaded, error, temperature, name, cityName } = this.state;
+    const { isLoaded, error, temperature, name, cityName, tempMax, tempMin, weatherDescription } = this.state;
     return (
       <View style={styles.container}>
         <StatusBar hidden={true} />
         {isLoaded ? (
           //<Weather weatherName={"Mist"} temp ={Math.round(temperature)} />
-          <Weather weatherName={name} temp ={Math.round(temperature)} cityName={cityName} />
+          <Weather 
+            weatherName={name} 
+            temp ={Math.round(temperature)} 
+            cityName={cityName} 
+            tempMax={Math.round(tempMax)} 
+            tempMin={Math.round(tempMin)} 
+            weatherDescription = {weatherDescription}  
+          />
         ) : (
           <View style={styles.loading}>
             <Text style={styles.loadingText}>Getting the weather</Text>
